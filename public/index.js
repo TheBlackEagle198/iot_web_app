@@ -85,7 +85,7 @@ class Module {
 
         if (this.strategy === "always") {
             this.mainElement.querySelector(".strategy-options").innerHTML = `
-                <p> Interval (ms): <input type="number" class="delay-interval" value="${this.delayInterval}"></p>
+                <p> Interval (ms): <input type="text" class="delay-interval" value="${this.delayInterval}"></p>
             `;
             const changeDelayButton = document.createElement("button"); 
             changeDelayButton.innerText = "Change Interval";
@@ -113,6 +113,7 @@ class Module {
         moduleButton.innerHTML = `<h3>Module: ${this.gid}</h3>`;
         moduleButton.addEventListener("click", toggleCollapsible, true);
         const moduleDiv = document.createElement("div");
+        moduleDiv.classList.add("module-content");
 
         moduleDiv.appendChild(this.createDataFields());
 
@@ -210,7 +211,7 @@ class PotentiometerModule extends Module {
             mqttService.publish(`${this.parentHub.gid}/B2H/${this.gid}/threshold`, this.mainElement.querySelector(".threshold").value);
         });
 
-        thresholdOptionsDiv.innerHTML += `<p>Threshold: <input type="number" class="threshold" value="${this.threshold}"></p>`;
+        thresholdOptionsDiv.innerHTML += `<p>Threshold: <input type="text" class="threshold" value="${this.threshold}"></p>`;
         thresholdOptionsDiv.appendChild(thresholdButton);
     }
 }
@@ -265,8 +266,8 @@ class TemperatureHumidityModule extends Module {
             mqttService.publish(`${this.parentHub.gid}/B2H/${this.gid}/threshold`, `${this.mainElement.querySelector(".temperature-threshold").value}\n${this.mainElement.querySelector(".humidity-threshold").value}`);
         });
         thresholdOptionsDiv.innerHTML = `
-        <p>Temperature threshold: <input type="number" class="temperature-threshold" value="${this.temperatureThreshold}"></p>
-        <p>Humidity threshold: <input type="number" class="humidity-threshold" value="${this.humidityThreshold}"></p>
+        <p>Temperature threshold: <input type="text" class="temperature-threshold" value="${this.temperatureThreshold}"></p>
+        <p>Humidity threshold: <input type="text" class="humidity-threshold" value="${this.humidityThreshold}"></p>
         `;
         thresholdOptionsDiv.appendChild(thresholdButton);
     }

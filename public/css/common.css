@@ -1,0 +1,26 @@
+:root {
+    --main-bg-color: #0A1B2C;
+    --elevation-1-bg-color: #0E2942;
+    --elevation-2-bg-color: #133758;
+    --elevation-3-bg-color: #18456E;
+    --title-color: #C1DCF4;
+    --button-hover-color: #1F6ABD;
+    --button-1-color: #3089DB;
+    --button-2-color: #226099;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: transparent;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--main-bg-color);
+}
