@@ -15,6 +15,18 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
+function checkAuth(req, res, next) {
+  if (!req.cookies.token) return res.redirect("/login");
+
+  jwt.verify(req.cookies.token, process.env.JWT_SECRET, function (err, decoded) {
+    if (err) {
+      res.redirect("/login");
+    } else {
+      next();
+    }
+  });
+}
+
 app.get("/mqttConnDetails", (req, res) => {
   if (!req.cookies.token) return res.status(403);
 
@@ -34,20 +46,11 @@ app.get("/mqttConnDetails", (req, res) => {
   });
 });
 
-app.get("/", function (req, res) {
-  console.log(req.cookies);
-  if (!req.cookies.token) return res.redirect("/login");
-
-  jwt.verify(req.cookies.token, process.env.JWT_SECRET, function (err, decoded) {
-    if (err) {
-      res.redirect("/login");
-    } else {
-      res.redirect("/dashboard");
-    }
-  });
+app.get("/", checkAuth, function (req, res) {
+  res.redirect("/dashboard");
 });
 
-app.get("/dashboard", function (req, res) {
+app.get("/dashboard", checkAuth, function (req, res) {
   res.render("dashboard", {
     title: "Dashboard",
   });
